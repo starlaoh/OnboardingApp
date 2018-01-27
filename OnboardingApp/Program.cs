@@ -20,10 +20,11 @@ namespace OnboardingApp
             User.LastName = AskQuestion("What is your last name?");
             Console.WriteLine($"Great! Hi {User.FullName}!");
 
-
-            Console.ReadLine();
+            User.IsAccountOwner = AskBoolQuestion("Are you the account owner?");
+            Console.WriteLine("Cool, good to know.");
+            
+               Console.ReadLine();
         }
-
 
         /// <summary>
         /// Ask question to the user via the console to get a response.
@@ -35,6 +36,16 @@ namespace OnboardingApp
         {
             Console.WriteLine(question);
             return Console.ReadLine();
+        }
+        static bool AskBoolQuestion(string question)
+        {
+            var response = AskQuestion(question + "| (y/n)");
+            if (response.ToLower() == "y") { return true; }
+            //return response == "y";
+            if (response.ToLower() == "n") { return false; }
+
+            Console.WriteLine("Invalid entry. Please type y or n.");
+            return AskBoolQuestion(question);
         }
     }
 }
