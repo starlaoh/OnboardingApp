@@ -10,15 +10,15 @@ namespace OnboardingApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, and welcome to our OnBoarding Application");
-
             var User = new User();
+
+            Console.WriteLine("Hello, and welcome to our OnBoarding Application");
 
             User.FirstName = AskQuestion("What is your first name?");
             Console.WriteLine($"Great! Hi { User.FirstName}!");
 
             User.LastName = AskQuestion("What is your last name?");
-            Console.WriteLine($"Great! Hi {User.FirstName}{User.LastName}");
+            Console.WriteLine($"Great! Hi {User.FullName}!");
 
 
             Console.ReadLine();
