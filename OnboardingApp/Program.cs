@@ -23,7 +23,7 @@ namespace OnboardingApp
             User.IsAccountOwner = AskBoolQuestion("Are you the account owner?");
             Console.WriteLine("Cool, good to know.");
             
-               Console.ReadLine();
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -37,15 +37,24 @@ namespace OnboardingApp
             Console.WriteLine(question);
             return Console.ReadLine();
         }
+        /// <summary>
+        /// Ask a T/F question to a user via the console and get response
+        /// <param name="question to ask user"></param>
+        /// <returns>user is required to type y or n</returns>
+ 
         static bool AskBoolQuestion(string question)
         {
-            var response = AskQuestion(question + "| (y/n)");
-            if (response.ToLower() == "y") { return true; }
-            //return response == "y";
-            if (response.ToLower() == "n") { return false; }
-
-            Console.WriteLine("Invalid entry. Please type y or n.");
-            return AskBoolQuestion(question);
+            while (true)
+            {
+                var response = AskQuestion(question + "| (y/n)");
+                switch (response.ToLower())
+                {
+                    case "y": return true;
+                    case "n": return false;
+                }
+                Console.WriteLine("Invalid entry. Please type y or n.");
+                // return response == "y";
+            }
         }
     }
 }
