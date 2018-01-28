@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OnboardingApp
 {
@@ -14,24 +9,25 @@ namespace OnboardingApp
             var User = new User();
             Console.WriteLine("Hello and welcome to the Onboard Application!");
             User.FirstName = AskQuestion("What is your first name?");
-            Console.WriteLine($"Great, hello {User.FirstName}!");
+            Console.WriteLine($"Hello {User.FirstName}!");
 
             User.LastName = AskQuestion("What is your last name?");
             Console.WriteLine($"Great, hello {User.FullName}!");
 
             User.IsAccountOwner = AskBoolQuestion("Are you the account owner?");
-            Console.WriteLine($"Cool, good to know. {User.IsAccountOwner}");
+            Console.WriteLine($"Alrighty then. {User.IsAccountOwner}");
 
             User.PinNumber = AskIntQuestion("What is your 4 digit pin number?", 4);
-            Console.WriteLine($"Cool, your 4 digit pin is {User.PinNumber}");
+            Console.WriteLine($"Your 4 digit pin is {User.PinNumber}");
 
-
+            Console.WriteLine("Excellent, finding your account--please hold.");
+            Console.ReadLine();
         }
 
         /// <summary>
         /// Ask question to the user via the console to get a response
         /// </summary>
-        /// <param name="The question to ask the user"></param>
+        /// <param name="question">The question to ask the user</param>
         /// <returns>Response from the user</returns>
 
 
@@ -44,12 +40,11 @@ namespace OnboardingApp
         /// <summary>
         /// Ask true/false question to the user via console and get a response
         /// </summary>
-        /// <param name="User is required to type y / n"></param>
+        /// <param name="question">y or no</param>
         /// <returns>y/n</returns>
 
         static bool AskBoolQuestion(string question)
         {
-
             while (true)
             {
                 var response = AskQuestion(question + "| (y/n)");
@@ -60,34 +55,36 @@ namespace OnboardingApp
                 }
 
                 Console.WriteLine("Invalid entry. Please type y or n");
+                return response == "y";
             }
         }
 
         /// <summary>
-        /// Question to ask the user
+        /// ask for users pin number via console
         /// </summary>
-        /// <param name="question"></param>
-        /// <param name="length"></param>
-        /// <returns>response for use</returns>
+        /// <param name="question">What is your 4 digit pin?></param>
+        /// <param name="length">restring to 4 digits</param>
+        /// <returns>User's 4 digit pin number</returns>
 
         static int AskIntQuestion(string question, int length = 0)
         {
-            var response = AskQuestion(question);
-
-            if (length > 0 && length != response.Length)
+            while (true)
             {
-                Console.WriteLine($"Invalid entry. Must be {length} digits.");
-                return AskIntQuestion(question, length);
-            }
+                var response = AskQuestion(question);
 
-            int value = 0;
-            if (int.TryParse(response, out value))
-            {
-                return value;
-            }
+                if (length > 0 && length != response.Length)
+                {
+                    Console.WriteLine($"Invalid entry. Must be {length} digits.");
+                    continue;
+                }
 
-            Console.WriteLine($"Invalid entry. Must be numeric values.");
-            return AskIntQuestion(question, length);
+                if (int.TryParse(response, out int value))
+                {
+                    return value;
+                }
+
+                Console.WriteLine($"Invalid entry. Must be a numeric value.");
+            }
         }
     }
 }
