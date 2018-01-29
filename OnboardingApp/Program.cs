@@ -48,14 +48,12 @@ namespace OnboardingApp
             while (true)
             {
                 var response = AskQuestion(question + "| (y/n)");
-                switch (response.ToLower())
-                {
-                    case "y": return true;
-                    case "n": return false;
-                }
-
-                Console.WriteLine("Invalid entry. Please type y or n");
-                return response == "y";
+                if (response.ToLower() == "y")
+                    return true;
+                if (response.ToLower() == "n")
+                    return false;
+                if (response.ToLower() != "y")
+                    Console.WriteLine("Invalid entry. Please type y or n.");
             }
         }
 
